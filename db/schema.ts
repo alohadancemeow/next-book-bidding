@@ -54,6 +54,7 @@ export const sessions = pgTable("bb_session", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
+// # table of verification tokens
 export const verificationTokens = pgTable(
   "bb_verificationToken",
   {
@@ -93,6 +94,7 @@ export const bids = pgTable("bb_bids", {
   timestamp: timestamp("timestamp", { mode: "date" }).notNull(),
 });
 
+// # relations of items
 export const usersRelations = relations(bids, ({ one }) => ({
   user: one(users, {
     fields: [bids.userId],

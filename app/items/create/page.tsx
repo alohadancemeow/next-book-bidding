@@ -19,33 +19,35 @@ export default function CreatePage() {
         onSubmit={async (e) => {
           e.preventDefault();
 
-        //   if (!date) {
-        //     return;
-        //   }
+          if (!date) {
+            return;
+          }
 
-        //   const form = e.currentTarget as HTMLFormElement;
-        //   const formData = new FormData(form);
-        //   const file = formData.get("file") as File;
+          const form = e.currentTarget as HTMLFormElement;
+          const formData = new FormData(form);
+          const file = formData.get("file") as File;
 
-        //   const uploadUrl = await createUploadUrlAction(file.name, file.type);
+          // console.log(file);
 
-        //   await fetch(uploadUrl, {
-        //     method: "PUT",
-        //     body: file,
-        //   });
+          const uploadUrl = await createUploadUrlAction(file.name, file.type);
 
-        //   const name = formData.get("name") as string;
-        //   const startingPrice = parseInt(
-        //     formData.get("startingPrice") as string
-        //   );
-        //   const startingPriceInCents = Math.floor(startingPrice * 100);
+          await fetch(uploadUrl, {
+            method: "PUT",
+            body: file,
+          });
 
-        //   await createItemAction({
-        //     name,
-        //     startingPrice: startingPriceInCents,
-        //     fileName: file.name,
-        //     endDate: date,
-        //   });
+          const name = formData.get("name") as string;
+          const startingPrice = parseInt(
+            formData.get("startingPrice") as string
+          );
+          const startingPriceInCents = Math.floor(startingPrice * 100);
+
+          await createItemAction({
+            name,
+            startingPrice: startingPriceInCents,
+            fileName: file.name,
+            endDate: date,
+          });
         }}
       >
         <Input
