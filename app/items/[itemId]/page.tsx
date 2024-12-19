@@ -17,11 +17,12 @@ function formatTimestamp(timestamp: Date) {
 }
 
 export default async function ItemPage({
-  params: { itemId },
+  params,
 }: {
   params: { itemId: string };
 }) {
   const session = await auth();
+  const { itemId } = await params;
 
   const item = await getItem(parseInt(itemId));
 

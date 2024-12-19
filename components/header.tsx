@@ -2,21 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { formatToDollar } from "@/utils/currency";
-// import {
-//   NotificationCell,
-//   NotificationFeedPopover,
-//   NotificationIconButton,
-// } from "@knocklabs/react";
+import {
+  NotificationCell,
+  NotificationFeedPopover,
+  NotificationIconButton,
+} from "@knocklabs/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { SignOut } from "./sign-out";
-import { SignIn } from "./sign-in";
 
 export function Header() {
-  //   const [isVisible, setIsVisible] = useState(false);
-  //   const notifButtonRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const notifButtonRef = useRef<HTMLButtonElement>(null);
   const session = useSession();
 
   const userId = session?.data?.user?.id;
@@ -55,29 +53,31 @@ export function Header() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          {/* {userId && (
+          {userId && (
             <>
               <NotificationIconButton
                 ref={notifButtonRef}
                 onClick={(e) => setIsVisible(!isVisible)}
               />
               <NotificationFeedPopover
-                buttonRef={notifButtonRef}
+                buttonRef={notifButtonRef as React.RefObject<HTMLElement>}
                 isVisible={isVisible}
                 onClose={() => setIsVisible(false)}
                 renderItem={({ item, ...props }) => (
-                  <NotificationCell {...props} item={item}>
+                  <NotificationCell {...props} item={item} key={item.id}>
                     <div className="rounded-xl">
                       <Link
                         className="text-blue-400 hover:text=blue-500"
                         onClick={() => {
                           setIsVisible(false);
                         }}
-                        href={`/items/${item.data.itemId}`}
+                        href={`/items/${item?.data?.itemId}`}
                       >
                         Someone outbidded you on{" "}
-                        <span className="font-bold">{item.data.itemName}</span>{" "}
-                        by ${formatToDollar(item.data.bidAmount)}
+                        <span className="font-bold">
+                          {item?.data?.itemName}
+                        </span>{" "}
+                        by ${formatToDollar(item?.data?.bidAmount)}
                       </Link>
                     </div>
                   </NotificationCell>
@@ -94,7 +94,7 @@ export function Header() {
               alt="user avatar"
               className="rounded-full"
             />
-          )} */}
+          )}
           <div>{session?.data?.user?.name}</div>
           <div>
             {userId ? (
@@ -108,11 +108,9 @@ export function Header() {
                 Sign Out
               </Button>
             ) : (
-              // <SignOut />
               <Button type="submit" onClick={() => signIn()}>
                 Sign In
               </Button>
-              // <SignIn />
             )}
           </div>
         </div>
