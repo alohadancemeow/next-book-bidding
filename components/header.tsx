@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-// import { formatToDollar } from "@/util/currency";
+import { formatToDollar } from "@/utils/currency";
 // import {
 //   NotificationCell,
 //   NotificationFeedPopover,
@@ -11,10 +11,12 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { SignOut } from "./sign-out";
+import { SignIn } from "./sign-in";
 
 export function Header() {
-//   const [isVisible, setIsVisible] = useState(false);
-//   const notifButtonRef = useRef(null);
+  //   const [isVisible, setIsVisible] = useState(false);
+  //   const notifButtonRef = useRef(null);
   const session = useSession();
 
   const userId = session?.data?.user?.id;
@@ -106,9 +108,11 @@ export function Header() {
                 Sign Out
               </Button>
             ) : (
+              // <SignOut />
               <Button type="submit" onClick={() => signIn()}>
                 Sign In
               </Button>
+              // <SignIn />
             )}
           </div>
         </div>
